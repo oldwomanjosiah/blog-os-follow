@@ -1,4 +1,28 @@
-[workspace]
-members = [
-	"blog-os-bin",
+[package]
+name = "blog-os-bin"
+version = "0.1.0"
+authors = ["Josiah Hilden <jhilden13@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[profile.dev]
+# panic = "abort"
+
+[profile.release]
+# panic = "abort"
+
+[package.metadata.bootimage]
+test-args = [
+    "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", "-serial", "stdio",
+	"-display", "none"
 ]
+test-success-exit-code = 33
+
+[dependencies]
+bootloader = "0.9.8"
+volatile = "0.2.6"
+lazy_static = { version = "1.0", features = [ "spin_no_std" ] }
+spin = "0.5.2"
+x86_64 = "0.13.2"
+uart_16550 = "0.2.0"
